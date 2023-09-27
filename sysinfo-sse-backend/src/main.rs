@@ -10,9 +10,11 @@ use axum::{
     Json, Router, Server,
 };
 use futures::stream;
-use sysinfo::SystemExt;
+use system_info::SysInfo;
 use tokio_stream::StreamExt as _;
 use tower_http::cors::CorsLayer;
+
+mod system_info;
 
 #[tokio::main]
 async fn main() {
@@ -34,30 +36,6 @@ async fn main() {
 
 async fn health_check() -> impl IntoResponse {
     (StatusCode::OK, "OK")
-}
-
-#[derive(serde::Serialize)]
-pub struct SysInfo {
-    pub hostname: String,
-    pub uptime: u64,
-    pub os: String,
-    pub load_one: f64,
-    pub load_five: f64,
-    pub load_fifteen: f64,
-}
-
-impl Default for SysInfo {
-    fn default() -> Self {
-        let info = sysinfo::System::new_all();
-        Self {
-            hostname: info.host_name().unwrap_or_default(),
-            uptime: info.uptime(),
-            os: info.long_os_version().unwrap_or_default(),
-            load_one: info.load_average().one,
-            load_five: info.load_average().five,
-            load_fifteen: info.load_average().fifteen,
-        }
-    }
 }
 
 async fn get_sysinfo() -> impl IntoResponse {
