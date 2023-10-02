@@ -4,26 +4,10 @@ import { InfoSection } from './sections/info';
 import { LoadSection } from './sections/load';
 import { MemorySection } from './sections/memory';
 import { CPUsSection } from './sections/cpus';
-
-interface SysInfo {
-	// System info
-	system_name: string;
-	hostname: string;
-	uptime: number;
-	os: string;
-	kernel_version: string;
-	// System load
-	load_one: number;
-	load_five: number;
-	load_fifteen: number;
-	// Memory
-	total_memory: number;
-	used_memory: number;
-	total_swap: number;
-	used_swap: number;
-	// CPUs
-	cpu_usage: number[];
-}
+import { SysInfo } from './sysinfo';
+import { ComponentsSection } from './sections/components';
+import { DisksSection } from './sections/disks';
+import { NetworkSection } from './sections/network';
 
 function App() {
 	const [sysinfo, setSysinfo] = useState<SysInfo>();
@@ -70,6 +54,9 @@ function App() {
 							usedSwap={sysinfo.used_swap}
 						/>
 						<CPUsSection cpuUsage={sysinfo.cpu_usage} />
+						<DisksSection disksInfo={sysinfo.disks_info} />
+						<ComponentsSection componentsInfo={sysinfo.components_info} />
+						<NetworkSection networkInfo={sysinfo.network_info} />
 					</AccordionList>
 				)}
 			</div>
