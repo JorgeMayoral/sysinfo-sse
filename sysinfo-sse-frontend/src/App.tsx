@@ -34,7 +34,7 @@ function App() {
 			{!sysinfo && <p className="text-center">Loading...</p>}
 			<div className="w-full overflow-y-auto pt-6 pb-12">
 				{sysinfo && (
-					<AccordionList className="w-full max-w-sm mx-auto">
+					<AccordionList className="w-full px-24 max-w-xl mx-auto">
 						<InfoSection
 							systemName={sysinfo.system_name}
 							hostname={sysinfo.hostname}
